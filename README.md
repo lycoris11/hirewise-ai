@@ -1,0 +1,2 @@
+# hirewise-ai
+Stealth
