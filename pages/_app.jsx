@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
         </Link>
 
         <Link href='/profile'>
-          <a className='ml-4'>Profile</a>
+          <a className='ml-4'>Sign In</a>
         </Link>
 
         <Link href='/protected'>
