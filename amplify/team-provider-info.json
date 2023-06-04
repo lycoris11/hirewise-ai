@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-hirewise-dev-191919-authRole",
+      "UnauthRoleArn": "arn:aws:iam::839858686902:role/amplify-hirewise-dev-191919-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::839858686902:role/amplify-hirewise-dev-191919-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-hirewise-dev-191919-deployment",
+      "UnauthRoleName": "amplify-hirewise-dev-191919-unauthRole",
+      "StackName": "amplify-hirewise-dev-191919",
+      "StackId": "arn:aws:cloudformation:us-east-2:839858686902:stack/amplify-hirewise-dev-191919/d1379890-fc23-11ed-a58d-02da967a24b1",
+      "AmplifyAppId": "d2satx585q8bbv"
+    },
+    "categories": {
+      "auth": {
+        "hirewise846df619": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+body{
+  font-family: 'Hanken Grotesk', sans-serif;
+  overflow-x: hidden
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+  
+.shake {
+  animation: shake 0.5s;
+}
+
+.SeparatorRow {
+  align-items: center;
+  display: flex;
+  text-align: center;
+}
+
+.SeparatorRow-horizontalLine {
+  border-top: 1px solid #444444;
+  flex: 1 1 auto;
+  margin-top: 8px;
+  min-width: 1px;
+  padding-top: 8px;
+}
+
+
+#tsparticles canvas{
+  margin-top: 4rem;
+}
