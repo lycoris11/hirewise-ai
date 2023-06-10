@@ -1,4 +1,28 @@
 {
+  "api": {
+    "api76df32da": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "AIComparePython"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "FileToText"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "auth": {
     "hirewise846df619": {
       "customAuth": false,
@@ -27,6 +51,59 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "AIComparePython": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "FileToText": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_AIComparePython_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AIComparePython"
+        }
+      ]
+    },
+    "AMPLIFY_function_AIComparePython_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AIComparePython"
+        }
+      ]
+    },
+    "AMPLIFY_function_FileToText_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "FileToText"
+        }
+      ]
+    },
+    "AMPLIFY_function_FileToText_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "FileToText"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "hwS3v1": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
     }
   }
 }

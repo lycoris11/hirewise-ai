@@ -56,10 +56,10 @@ export default function SignIn({onChange, setUiState, signIn, shake}){
       </div>
 
       <div className="mt-8">
-        <span class="SeparatorRow LoginDefaultView-separatorRow">
-          <span class="SeparatorRow-horizontalLine"></span>
+        <span className="SeparatorRow LoginDefaultView-separatorRow">
+          <span className="SeparatorRow-horizontalLine"></span>
           <span className="text-gray-400 mx-2">or</span>
-          <span class="SeparatorRow-horizontalLine"></span>
+          <span className="SeparatorRow-horizontalLine"></span>
         </span>
       </div>
       

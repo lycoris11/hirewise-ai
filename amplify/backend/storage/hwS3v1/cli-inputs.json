@@ -1,0 +1,14 @@
+{
+  "resourceName": "hwS3v1",
+  "policyUUID": "a12ee1e0",
+  "bucketName": "hirewisef64c7467344b456ea3448f8c3f0b4132",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

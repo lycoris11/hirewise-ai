@@ -24,6 +24,7 @@ export default function LoginFlow(){
     try{
       setUiState('loading');
       const user = await Auth.currentAuthenticatedUser();
+      console.log(user);
       setUser(user);
       setUiState('signedIn');
     } catch(err){ 
@@ -44,6 +45,7 @@ export default function LoginFlow(){
       setUiState('confirmSignUp');
     } catch(err){
       console.log({err});
+      setAndRemoveShake();
     }
   }
   
@@ -53,10 +55,11 @@ export default function LoginFlow(){
       setUiState('signedIn');
       signIn();
     } catch(err){
-      console.log({err})
+      console.log({err}[0]);
+      setAndRemoveShake();
     }
   }
-
+  
   async function signIn(){
     try{
       await Auth.signIn(email, password);
@@ -64,11 +67,15 @@ export default function LoginFlow(){
       checkUser()
     } catch(err){
       console.log({err});
-      setShake(true);
+      setAndRemoveShake();
+    }
+  }
+
+  function setAndRemoveShake(){
+    setShake(true);
       setTimeout(() => {
         setShake(false);
       }, 1000);
-    }
   }
 
   /*use reducer */
@@ -98,8 +105,8 @@ export default function LoginFlow(){
       !uiState || uiState === 'loading' ? (
         <></>
       ) : (
-        <div className=" select-none min-h-screen bg-repeat-round overflow: hidden;">
-          <div className="flex flex-col items-center signInForm">
+        <div className="select-none min-h-screen bg-repeat-round overflow: hidden;">
+          <div className="flex flex-col items-center">
             <div className="max-w-full sm:w-540 mt-16">
               <div className="backdrop-invert backdrop-blur py-16 px-16 shadow-form rounded-lg">
                 {
@@ -108,6 +115,7 @@ export default function LoginFlow(){
                       onChange={onChange}
                       setUiState={setUiState}
                       signUp={signUp}
+                      shake={shake}
                     />
                   )
                 }
@@ -133,7 +141,7 @@ export default function LoginFlow(){
                 {
                   (uiState === 'signedIn' && user) && (
                     <div>
-                      <p className='text-xl'>Welcome, {user.attributes.email}</p>
+                      <p className='text-xl text-white'>Welcome, {user.attributes.email}</p>
                       <button className="text-white w-full mt-10 bg-pink-600 p-3 rounded"
                         onClick = {() => {
                           Auth.signOut();
