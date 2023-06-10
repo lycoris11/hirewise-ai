@@ -13,11 +13,12 @@ export default function Protected(){
   const[user, setUser] = useState(null);
   const[jdr, setJDR] = useState({job_description:"", resume:""});
   const[fileName, setFileName] = useState('');
-  const[jdFileData, setJDFileData] = useState();
+  const[jdFileData, setJDFileData] = useState(null);
   const[aiOutput, setAIOutput] = useState('');
   const[pdfOutput, setpdfOutput] = useState('');
   const[fileUploaded, setFileUploaded] = useState(false);
-  
+  const[usersFiles, setUsersFiles] = useState([]);
+  //const usersFiles = [];
   const router = useRouter();
   
   const api = 'api76df32da';
@@ -26,6 +27,7 @@ export default function Protected(){
 
   useEffect(() => {
     checkUser();
+    checkFiles();
   }, []);
 
   async function checkUser(){
@@ -37,6 +39,17 @@ export default function Protected(){
       router.push('/profile');
     };
   };
+
+  async function checkFiles(){
+    try{
+      const files = await Storage.list('');
+      const fileData = files.results;
+      let keys = fileData.map(obj => obj.key)
+      setUsersFiles(keys);
+    }catch(err){
+      console.log(err);
+    }
+  }
 
   function updateJDR(e){
     setJDR({...jdr, [e.target.name]: e.target.value});
@@ -69,7 +82,7 @@ export default function Protected(){
         console.log(res);
         setpdfOutput(res.response);
       })
-      .catch((err) =>{
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -82,6 +95,7 @@ export default function Protected(){
       console.log(result.key);
       setFileName(result.key);
       setFileUploaded(true);
+      checkFiles();
     }catch(err){
       console.error('Unexpected error while uploading', err);
     }
@@ -92,7 +106,7 @@ export default function Protected(){
 
   async function listfiles(){
     Storage.list('') // for listing ALL files without prefix, pass '' instead
-      .then(({ results }) => console.log(results))
+      .then(( {results} ) => console.log(results))
       .catch((err) => console.log(err));
   }
   
@@ -148,6 +162,13 @@ export default function Protected(){
         </div>
         <div>
           {pdfOutput}
+        </div>
+        <div>
+          {
+            usersFiles.map((item)=>{
+              return (<p key={item}>{item}</p>)
+            })
+          }
         </div>
       </div>
     </>
