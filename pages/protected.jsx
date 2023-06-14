@@ -2,11 +2,11 @@ import { Auth, API, Storage } from 'aws-amplify'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
 import '../configureAmplify'
+import NavBar from '../components/NavBar';
 
 export default function Protected(){
 
   //Enhancements: 
-  //Check to see if a file with that name already exists.
   //Option to delete a file from the S3 bucket
 
 
@@ -15,7 +15,7 @@ export default function Protected(){
   const[fileName, setFileName] = useState('');
   const[jdFileData, setJDFileData] = useState(null);
   const[aiOutput, setAIOutput] = useState('');
-  const[pdfOutput, setpdfOutput] = useState('');
+  const[jobDescText, setJobDesText] = useState('');
   const[fileUploaded, setFileUploaded] = useState(false);
   const[usersFiles, setUsersFiles] = useState([]);
   //const usersFiles = [];
@@ -27,12 +27,14 @@ export default function Protected(){
 
   useEffect(() => {
     checkUser();
-    checkFiles();
+    getUsersFiles();
   }, []);
 
   async function checkUser(){
     try{
       const user = await Auth.currentAuthenticatedUser();
+      const userIdentityId = (await Auth.currentCredentials()).identityId;
+      console.log(userIdentityId);
       setUser(user);
     } catch(err){ 
       setUser(null);
@@ -40,7 +42,7 @@ export default function Protected(){
     };
   };
 
-  async function checkFiles(){
+  async function getUsersFiles(){
     try{
       const files = await Storage.list('');
       const fileData = files.results;
@@ -56,7 +58,7 @@ export default function Protected(){
   }
 
 
-  async function compareJDandResume(){
+  async function isGoodCandidateMatch(){
     const body = {body:jdr};
     console.log(body);
     console.log(JSON.stringify(body));
@@ -70,7 +72,7 @@ export default function Protected(){
       })
   }
   
-  async function getResumePDFText(){
+  async function extractJobDescText(){
     const userIdentityId = (await Auth.currentCredentials()).identityId;
     console.log(userIdentityId);
     const body = {body:{
@@ -80,25 +82,36 @@ export default function Protected(){
     API.post(api, '/fileToText', body)
       .then((res) => {
         console.log(res);
-        setpdfOutput(res.response);
+        setJobDesText(res.response);
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  async function uploadFile(){
-    try{
-      const result = await Storage.put(jdFileData.name, jdFileData, {
-        contentType: jdFileData.type,
-      });
-      console.log(result.key);
-      setFileName(result.key);
-      setFileUploaded(true);
-      checkFiles();
-    }catch(err){
-      console.error('Unexpected error while uploading', err);
+  async function uploadFileToS3(){
+    if(!usersFiles.includes(jdFileData.name)){
+      try{
+        const result = await Storage.put(jdFileData.name, jdFileData, {
+          contentType: jdFileData.type,
+        });
+        console.log(result);
+        console.log(result.key);
+        setFileName(result.key);
+        setFileUploaded(true);
+        getUsersFiles();
+        saveUploadedFileToDB(result.key);
+      }catch(err){
+        console.error('Unexpected error while uploading', err);
+      }
+    }else{
+      //Add logic to notify user that the file with filename already exists.
+      console.log("File already exists");
     }
+  }
+
+  async function saveUploadedFileToDB(file){
+    console.log("xxx")
   }
 
   //The aws s3 bucket saves the files under "protected/{user_identity_id}/file.pdf"
@@ -114,6 +127,7 @@ export default function Protected(){
 
   return(
     <>
+      <NavBar state={'protected'}/>
       <div>
         <p>Protected Route!</p>
       </div>
@@ -135,7 +149,7 @@ export default function Protected(){
         </div>
         <div className="flex flex-row">
           <button
-            onClick={() => compareJDandResume()}>
+            onClick={() => isGoodCandidateMatch()}>
             Submit
           </button>
           <p>{aiOutput}</p>
@@ -148,20 +162,20 @@ export default function Protected(){
         </div>
         <div>
           <button
-            onClick={uploadFile}
+            onClick={uploadFileToS3}
           >Upload File
           </button>
         </div>
         <div>
           {fileUploaded ? (
-            <button onClick={getResumePDFText}>get Resume PDF Text</button>
+            <button onClick={extractJobDescText}>get Resume PDF Text</button>
           ): ''}
         </div>
         <div>
           <button onClick={listfiles}>List files</button>
         </div>
         <div>
-          {pdfOutput}
+          {jobDescText}
         </div>
         <div>
           {

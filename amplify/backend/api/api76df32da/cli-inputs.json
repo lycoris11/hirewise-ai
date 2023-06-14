@@ -26,6 +26,19 @@
           "delete"
         ]
       }
+    },
+    "/db/uploadJD": {
+      "name": "/db/uploadJD",
+      "lambdaFunction": "UploadJDToDB",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
     }
   }
 }

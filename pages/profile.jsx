@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import NavBar from '../components/NavBar';
 import LoginFlow from '../components/LoginFlow';
 
 
@@ -11,6 +12,7 @@ function Profile(){
   
   return(
     <>
+      <NavBar></NavBar>
       <Particle/>
       <LoginFlow/>
     </>

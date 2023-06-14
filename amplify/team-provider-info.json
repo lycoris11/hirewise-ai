@@ -24,6 +24,10 @@
         "FileToText": {
           "deploymentBucketName": "amplify-hirewise-dev-191919-deployment",
           "s3Key": "amplify-builds/FileToText-70552f3570457553426a-build.zip"
+        },
+        "UploadJDToDB": {
+          "deploymentBucketName": "amplify-hirewise-dev-191919-deployment",
+          "s3Key": "amplify-builds/UploadJDToDB-716d4c4c494451674e49-build.zip"
         }
       },
       "api": {

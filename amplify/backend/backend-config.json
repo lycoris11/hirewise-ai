@@ -17,6 +17,14 @@
           ],
           "category": "function",
           "resourceName": "FileToText"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "UploadJDToDB"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -63,6 +71,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "UploadJDToDB": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -95,6 +108,22 @@
         {
           "category": "function",
           "resourceName": "FileToText"
+        }
+      ]
+    },
+    "AMPLIFY_function_UploadJDToDB_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UploadJDToDB"
+        }
+      ]
+    },
+    "AMPLIFY_function_UploadJDToDB_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UploadJDToDB"
         }
       ]
     }
