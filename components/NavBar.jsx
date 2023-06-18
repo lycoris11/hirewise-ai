@@ -26,10 +26,11 @@ export default function NavBar({state}){
                   onClick = {() => {
                   Auth.signOut();
                   }}
-                  className='ml-4 cursor-pointer'>Sign Out
+                  className='ml-4 cursor-pointer'
+                >Sign Out
                 </a>
               </>
-            ): (
+            ) : (
               <>
                 <Link href='/protected'>
                   <a className='ml-4'>Protect</a>

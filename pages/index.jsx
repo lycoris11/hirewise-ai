@@ -5,7 +5,7 @@ export default function Home() {
     <>
       <NavBar></NavBar>
       
-      <div className="min-h-screen bg-repeat-round">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-100">
           <div className="flex flex-col items-center">
             <div className="max-w-2/3 sm:w-2/3 mt-16">
               <header className='pt-24'>

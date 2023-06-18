@@ -1,7 +1,7 @@
-import { Auth, API, Storage } from 'aws-amplify'
-import { useState, useEffect } from 'react'
+import { Auth, API, Storage } from 'aws-amplify';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import '../configureAmplify'
+import '../configureAmplify';
 import NavBar from '../components/NavBar';
 
 export default function Protected(){
@@ -18,9 +18,9 @@ export default function Protected(){
   const[jobDescText, setJobDesText] = useState('');
   const[fileUploaded, setFileUploaded] = useState(false);
   const[usersFiles, setUsersFiles] = useState([]);
-  //const usersFiles = [];
-  const router = useRouter();
+  const [userIdentityId, setUserIdentityId] = useState('');
   
+  const router = useRouter();
   const api = 'api76df32da';
 
   Storage.configure({ level: 'private' });
@@ -33,8 +33,7 @@ export default function Protected(){
   async function checkUser(){
     try{
       const user = await Auth.currentAuthenticatedUser();
-      const userIdentityId = (await Auth.currentCredentials()).identityId;
-      console.log(userIdentityId);
+      setUserIdentityId((await Auth.currentCredentials()).identityId);
       setUser(user);
     } catch(err){ 
       setUser(null);
@@ -50,6 +49,56 @@ export default function Protected(){
       setUsersFiles(keys);
     }catch(err){
       console.log(err);
+    };
+  };
+
+  async function uploadJDFileToS3(){
+    if(!usersFiles.includes(jdFileData.name)){
+      try{
+        const result = await Storage.put(jdFileData.name, jdFileData, {
+          contentType: jdFileData.type,
+        });
+        setFileName(result.key);
+        setFileUploaded(true);
+        getUsersFiles();
+        const text = await extractJobDescText(result.key)
+        saveUploadedFileToDB(text, result.key);
+      }catch(err){
+        console.error('Unexpected error while uploading', err);
+      };
+    }else{
+      //Add logic to notify user that the file with filename already exists.
+      console.log("File already exists");
+    };
+  };
+
+  
+  async function extractJobDescText(f){
+    const body = {body:{
+      identityID:userIdentityId,
+      fileName: f ? f : fileName
+    }};
+    try {
+      const result = await API.post(api, '/fileToText', body);
+      setJobDesText(result.response);
+      return Promise.resolve(result.response);
+    } catch (err) {
+      console.log(err);
+      return Promise.reject(err);
+    }
+  }
+
+  async function saveUploadedFileToDB(pdf_text, file){
+    const body = {body:{
+      identityID:userIdentityId,
+      text: pdf_text,
+      fileName: file
+    }};
+
+    try{
+      const result = await API.post(api, '/db/uploadJD', body)
+    }catch(err){
+      console.log(err);
     }
   }
 
@@ -57,65 +106,17 @@ export default function Protected(){
     setJDR({...jdr, [e.target.name]: e.target.value});
   }
 
-
   async function isGoodCandidateMatch(){
     const body = {body:jdr};
-    console.log(body);
-    console.log(JSON.stringify(body));
+
     API.post(api, '/compare', body)
       .then((res) => {
-        console.log(res);
         setAIOutput(res.response);
       })
       .catch((err) => {
         console.log(err);
       })
   }
-  
-  async function extractJobDescText(){
-    const userIdentityId = (await Auth.currentCredentials()).identityId;
-    console.log(userIdentityId);
-    const body = {body:{
-      identityID:userIdentityId,
-      fileName: fileName
-    }};
-    API.post(api, '/fileToText', body)
-      .then((res) => {
-        console.log(res);
-        setJobDesText(res.response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  async function uploadFileToS3(){
-    if(!usersFiles.includes(jdFileData.name)){
-      try{
-        const result = await Storage.put(jdFileData.name, jdFileData, {
-          contentType: jdFileData.type,
-        });
-        console.log(result);
-        console.log(result.key);
-        setFileName(result.key);
-        setFileUploaded(true);
-        getUsersFiles();
-        saveUploadedFileToDB(result.key);
-      }catch(err){
-        console.error('Unexpected error while uploading', err);
-      }
-    }else{
-      //Add logic to notify user that the file with filename already exists.
-      console.log("File already exists");
-    }
-  }
-
-  async function saveUploadedFileToDB(file){
-    console.log("xxx")
-  }
-
-  //The aws s3 bucket saves the files under "protected/{user_identity_id}/file.pdf"
-  //can get identity id from const x = (await Auth.currentCredentials()).identityId;
 
   async function listfiles(){
     Storage.list('') // for listing ALL files without prefix, pass '' instead
@@ -162,8 +163,8 @@ export default function Protected(){
         </div>
         <div>
           <button
-            onClick={uploadFileToS3}
-          >Upload File
+            onClick={uploadJDFileToS3}
+          >Upload JD File
           </button>
         </div>
         <div>
