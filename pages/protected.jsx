@@ -50,6 +50,13 @@ export default function Protected(){
     };
   };
 
+  function getScore(aiResponse){
+    const regex = /Score: (\d+)/;
+    const match = regex.exec(aiResponse);
+    const score = match ? Number(match[1]) : null;
+    return score;
+  }
+
   async function getJDFiles(){
     try{
       const files = await Storage.list('', {pageSize:'ALL'});
@@ -97,19 +104,20 @@ export default function Protected(){
       });
       const resumeText = await extractFileText(result.key);
       const aiResponse = await isGoodCandidateMatch(resumeText);
-      console.log(aiResponse);
-      //saveUploadedResumeFileToDB(text, result.key)
+      const score = getScore(aiResponse)
+      saveUploadedResumeFileToDB(resumeText, aiResponse, score)
     }catch(err){
       console.error('Unexpected error while uploading', err);
     };
   };
 
-  async function saveUploadedResumeFileToDB(pdf_text, file){
+  async function saveUploadedResumeFileToDB(resumeText, aiResponse, score){
     const body = {body:{
       identityID:userIdentityId,
       jdName:currentJD,
-      text: pdf_text,
-      fileName: file
+      score: score,
+      resumeText: resumeText,
+      resumeOutput: aiResponse
     }};
 
     try{
@@ -220,7 +228,6 @@ export default function Protected(){
                     currentJD={currentJD}
                     setResumeFileForm={setResumeFileForm}
                     uploadResumeFileToS3={uploadResumeFileToS3}
-                    isGoodCandidateMatch={isGoodCandidateMatch}
                     aiOutput={aiOutput}
                   />
                 )

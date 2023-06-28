@@ -37,25 +37,6 @@ def handler(event, context):
   score = str(body_dict['score'])
   resume_text = escape_string_literals(str(body_dict['resumeText']))
   resume_output = str(body_dict['resumeOutput'])
-  
-
-  #job_description_query = '''INSERT INTO job_description (job_description_id, identity_id, jd_name, jd_text) VALUES (:job_description_id, :identity_id, :jd_name, :jd_text);'''
-  #resume_query = f"INSERT INTO resume (resume_id, identity_id, job_description_id, output, score) VALUES ('{identity_id}', (SELECT job_description_id FROM job_description WHERE identity_id = '{identity_id}' AND text = '{text_data}'), '', '', 0);"
-  
-  '''job_description_id_query = 'SELECT job_description_id FROM job_description WHERE identity_id = :identity_id AND jd_name = :jd'
-  jd_query_params = [
-    {
-      'name':'identity_id',
-      'value':{ 'stringValue':identity_id }
-    },
-    {
-      'name':'jd',
-      'value':{ 'stringValue':jd }
-    }
-  ]'''
-
-  
-  #LEFT OFF HERE
 
   resume_insert_query = '''INSERT INTO resume (resume_id, identity_id, job_description_id, score, resume_text, resume_output) VALUES (:resume_id, :identity_id, (SELECT job_description_id FROM job_description WHERE identity_id = :identity_id AND jd_name = :jd), :score, :resume_text, :resume_output);'''
   resume_insert_query_params = [
