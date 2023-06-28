@@ -17,12 +17,13 @@ export default function Protected(){
   const[user, setUser] = useState(null);
   const[jdr, setJDR] = useState({job_description:'', resume:'""'});
   const[fileName, setFileName] = useState('');
-  //const[jdFileData, setJDFileData] = useState(null);
   const[jdFileForm, setJDFileForm] = useState({jobName:'', jdFileData:null});
+  const[resumeFileForm, setResumeFileForm] = useState({resumeFileData:null});
   const[aiOutput, setAIOutput] = useState('');
   const[jobDescText, setJobDesText] = useState('');
   const[fileUploaded, setFileUploaded] = useState(false);
   const[jdFiles, setJDFiles] = useState([]);
+  const[resumeFiles, setResumeFiles] = useState([]);
   const[userIdentityId, setUserIdentityId] = useState('');
   const[mainPanelState, setMainPanelState] = useState(null);
   const[currentJD, setCurrentJD] = useState('');
@@ -54,14 +55,20 @@ export default function Protected(){
       const files = await Storage.list('', {pageSize:'ALL'});
       const fileData = files.results;
       let keys = fileData.map(obj => obj.key)
-      setJDFiles(keys);
+      const topLevelFiles = [];
+      for (let i = 0; i < keys.length; i++) {
+        const file = keys[i];
+        if (!keys[i].includes("/")) {
+          topLevelFiles.push(file);
+        }
+      }
+      setJDFiles(topLevelFiles);
     }catch(err){
       console.log(err);
     };
   };
 
   async function uploadJDFileToS3(){
-    console.log(jdFileForm)
     if(!jdFiles.includes(jdFileForm.jobName)){
       setMainPanelState('Loading');
       try{
@@ -71,8 +78,8 @@ export default function Protected(){
         setFileName(result.key);
         setFileUploaded(true);
         getJDFiles();
-        const text = await extractJobDescText(result.key)
-        saveUploadedFileToDB(text, result.key);
+        const text = await extractFileText(result.key);
+        saveUploadedJDFileToDB(text, result.key);
         setMainPanelState('ResumeUploads');
       }catch(err){
         console.error('Unexpected error while uploading', err);
@@ -84,14 +91,39 @@ export default function Protected(){
   };
 
   async function uploadResumeFileToS3(){
+    try{
+      const result = await Storage.put(currentJD+'/'+resumeFileForm.jdFileData.name, resumeFileForm.jdFileData, {
+        contentType: resumeFileForm.jdFileData.type,
+      });
+      const resumeText = await extractFileText(result.key);
+      const aiResponse = await isGoodCandidateMatch(resumeText);
+      console.log(aiResponse);
+      //saveUploadedResumeFileToDB(text, result.key)
+    }catch(err){
+      console.error('Unexpected error while uploading', err);
+    };
+  };
 
+  async function saveUploadedResumeFileToDB(pdf_text, file){
+    const body = {body:{
+      identityID:userIdentityId,
+      jdName:currentJD,
+      text: pdf_text,
+      fileName: file
+    }};
+
+    try{
+      const result = await API.post(api, '/db/uploadResume', body)
+    }catch(err){
+      console.log(err);
+    }
   }
 
   
-  async function extractJobDescText(f){
+  async function extractFileText(f){
     const body = {body:{
       identityID:userIdentityId,
-      fileName: f ? f : fileName
+      fileName: f
     }};
     try {
       const result = await API.post(api, '/fileToText', body);
@@ -103,7 +135,7 @@ export default function Protected(){
     }
   }
 
-  async function saveUploadedFileToDB(pdf_text, file){
+  async function saveUploadedJDFileToDB(pdf_text, file){
     const body = {body:{
       identityID:userIdentityId,
       text: pdf_text,
@@ -132,16 +164,21 @@ export default function Protected(){
     }
   }
   
-  async function isGoodCandidateMatch(){
-    const body = {body:jdr};
+  async function isGoodCandidateMatch(resumeText){
+    const body = {body:{
+      identityID:userIdentityId,
+      jdName:currentJD,
+      resumeText: resumeText
+    }};
 
-    API.post(api, '/compare', body)
-      .then((res) => {
-        setAIOutput(res.response);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    try {
+      const result = await API.post(api, '/compare', body);
+      setAIOutput(result.response);
+      return Promise.resolve(result.response);
+    } catch (err) {
+      console.log(err);
+      return Promise.reject(err);
+    }
   }
 
   async function listfiles(){
@@ -181,6 +218,10 @@ export default function Protected(){
                 mainPanelState === 'ResumeUploads' && (
                   <ResumeUploads
                     currentJD={currentJD}
+                    setResumeFileForm={setResumeFileForm}
+                    uploadResumeFileToS3={uploadResumeFileToS3}
+                    isGoodCandidateMatch={isGoodCandidateMatch}
+                    aiOutput={aiOutput}
                   />
                 )
               }

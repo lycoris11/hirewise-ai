@@ -25,6 +25,14 @@
           ],
           "category": "function",
           "resourceName": "UploadJDToDB"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "UploadResumeToDB"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -76,6 +84,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "UploadResumeToDB": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -124,6 +137,22 @@
         {
           "category": "function",
           "resourceName": "UploadJDToDB"
+        }
+      ]
+    },
+    "AMPLIFY_function_UploadResumeToDB_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UploadResumeToDB"
+        }
+      ]
+    },
+    "AMPLIFY_function_UploadResumeToDB_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UploadResumeToDB"
         }
       ]
     }

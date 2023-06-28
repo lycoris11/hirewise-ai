@@ -19,7 +19,7 @@
       "function": {
         "AIComparePython": {
           "deploymentBucketName": "amplify-hirewise-dev-191919-deployment",
-          "s3Key": "amplify-builds/AIComparePython-38384843557454754278-build.zip"
+          "s3Key": "amplify-builds/AIComparePython-3868344f556f7a624475-build.zip"
         },
         "FileToText": {
           "deploymentBucketName": "amplify-hirewise-dev-191919-deployment",
@@ -27,7 +27,11 @@
         },
         "UploadJDToDB": {
           "deploymentBucketName": "amplify-hirewise-dev-191919-deployment",
-          "s3Key": "amplify-builds/UploadJDToDB-536947515661426a4847-build.zip"
+          "s3Key": "amplify-builds/UploadJDToDB-6847386578466f704162-build.zip"
+        },
+        "UploadResumeToDB": {
+          "deploymentBucketName": "amplify-hirewise-dev-191919-deployment",
+          "s3Key": "amplify-builds/UploadResumeToDB-6d692b444f46744e4967-build.zip"
         }
       },
       "api": {

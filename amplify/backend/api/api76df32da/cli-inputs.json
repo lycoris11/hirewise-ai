@@ -39,6 +39,19 @@
           "delete"
         ]
       }
+    },
+    "/db/uploadResume": {
+      "name": "/db/uploadResume",
+      "lambdaFunction": "UploadResumeToDB",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
     }
   }
 }

@@ -1,32 +1,59 @@
+import os
 import json
 import openai
 import boto3
 
-def get_api_key():
-  lambda_client = boto3.client('lambda')
-  response = lambda_client.invoke(
-    FunctionName = 'arn:aws:lambda:us-east-2:839858686902:function:openai_get_api_key',
-    InvocationType = 'RequestResponse'
+lambda_client = boto3.client('lambda')
+openai.api_key = os.environ['openai_api_key']
+
+rds_client = boto3.client('rds-data')
+DATABASE_NAME = 'hirewise'
+DB_CLUSTER_ARN = 'arn:aws:rds:us-east-2:839858686902:cluster:hirewise-db'
+DB_CREDENTIALS_SECRETS_STORE_ARN = os.environ['rds_secret']
+
+def execute_statement(postgres, params):
+  response = rds_client.execute_statement(
+    secretArn = DB_CREDENTIALS_SECRETS_STORE_ARN,
+    database = DATABASE_NAME,
+    resourceArn = DB_CLUSTER_ARN,
+    sql = postgres,
+    parameters = params
   )
-  openai_api_key = json.load(response['Payload'])['body']['api_key']
-  return openai_api_key
+  return response
 
 def handler(event, context):
-  #data_string = json.dumps(event)
-  #body_string = json.loads(data_string)['body']
+  
+  #Get Request Body from HTTP POST
   body_string = json.loads(json.dumps(event))['body']
   body_dict = json.loads(body_string)
-  job_description = body_dict['job_description']
-  resume = body_dict['resume']
+  
+  #Body params
+  identity_id = str(body_dict['identityID'])
+  jd = str(body_dict['jdName'])
+  resume = body_dict['resumeText']
+  
+  #Get Job Description Text
+  jd_text_query = '''SELECT jd_text FROM job_description WHERE identity_id = :identity_id AND jd_name = :jd'''
+  jd_query_params = [
+    {
+      'name':'identity_id',
+      'value':{ 'stringValue':identity_id }
+    },
+    {
+      'name':'jd',
+      'value':{ 'stringValue':jd }
+    }
+  ]
+  job_description = execute_statement(jd_text_query, jd_query_params)['records'][0][0]['stringValue']
   
   model_to_use = 'gpt-3.5-turbo'
-  input_prompt = [{'role': 'system', 'content' : 'You are to act as an experienced recruiter. I will give you a job description. Then I will give you the resume. You will then tell me if the candidate is a good match for the role. Then you will score the candidate on a scale of 1-10. 1 being not likely to reach out for an interview, and 10 being that you will reach out for an interview.'},
-                  {"role": "assistant", "content" : "Sure, I can do that. Please provide me with the job description and the resume."},
+  input_prompt = [{"role": "system", "content" : "You are to act as an experienced recruiter. I give you a job description. Then, I will give you a resume. You will give key reasons why or why not to reach out. On the final line of your output you will score the candidate on a scale of 1-10. Provide a score in the format Score: X and do not include a period. 1 being not likely to reach out for an interview, and 10 being that you will reach out for an interview. Limit your response to 50 words."},
+                  {"role": "assistant", "content" : "Can you please provide me with the Job Description?"},
                   {"role": "user", "content" : f'Below this line is the job description:\n{job_description}'},
                   {"role": "assistant", "content" : "Thank you for providing the job description. Please provide me with the candidate's resume"},
-                  {"role": "user", "content" : f'Below this line is the resume:\n{resume}'}]
+                  {"role": "user", "content" : f'Below this line is the candidate\'s resume:\n{resume}'}]
   
-  openai.api_key = get_api_key()
+  
   completion = openai.ChatCompletion.create(
       model = model_to_use,
       messages = input_prompt,
@@ -47,3 +74,13 @@ def handler(event, context):
       'response': text_response
     })
   }
+  
+'''
+def get_api_key():
+  response = lambda_client.invoke(
+    FunctionName = 'arn:aws:lambda:us-east-2:839858686902:function:openai_get_api_key',
+    InvocationType = 'RequestResponse'
+  )
+  openai_api_key = json.load(response['Payload'])['body']['api_key']
+  return openai_api_key
+'''
