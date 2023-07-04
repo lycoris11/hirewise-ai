@@ -1,17 +1,58 @@
+import { API } from 'aws-amplify';
+import '../configureAmplify';
 import UploadResume from "./UploadResume"
+import { useState, useEffect } from 'react';
 
 
-export default function ResumeUploads(
-  {
-    currentJD, 
-    setResumeFileForm, 
-    uploadResumeFileToS3, 
-    aiOutput
-  }){
-    
-    return (
-      <>
-        <div className="mt-12 px-16">
+export default function ResumeUploads({ userIdentityId, currentJD, setResumeFileForm, uploadResumeFileToS3, aiOutput }){
+
+  const[resumeData, setResumeData] = useState([]);
+
+  const api = 'api76df32da';
+
+  useEffect(() => {
+
+    let isCancelled = false;
+    getResumes(isCancelled);
+
+    return () => {
+      isCancelled = true;
+    }
+
+  }, [currentJD])
+
+  async function getResumes(isCancelled){
+    console.log(userIdentityId)
+    console.log(currentJD)
+    const body = {body:{
+      identityID:userIdentityId,
+      jdName: currentJD
+    }};
+
+    try {
+      const result = await API.post(api, '/db/getResume', body);
+      if(!isCancelled || isCancelled === undefined){
+        const returnedData = result.response.records.map(record => record);
+        setResumeData(returnedData);
+        console.log(returnedData)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function handleSubmit(){
+    try{
+      await uploadResumeFileToS3();
+      getResumes();
+    }catch(e){
+      console.log(e);
+    }
+  }
+  
+  return (
+    <>
+      <div className="mt-12 px-16">
         <h1 className="font-bold text-4xl text-indigo-500">Match Candidates - {currentJD}</h1>
         <div className="mt-4 flex flex-col items-center justify-center w-full">
           <UploadResume
@@ -23,35 +64,25 @@ export default function ResumeUploads(
             className="justify-left"
             type="submit"
             onClick={() => {
-              uploadResumeFileToS3()
+              handleSubmit();
             }}
           >Get Results
           </button>
-          <div>{aiOutput}</div>
+          {/*<div>{aiOutput}</div>*/}
+
+          <div>
+            {
+              resumeData.map((item)=>{
+                return (
+                  <div className='mt-4'>
+                    <p key={item}>{item[5].stringValue}</p>
+                  </div>
+                )
+              })
+            }
+          </div>
         </div>
       </div>
-      
-      <>{/*
-        <div className="mt-12 px-16">
-          <h1 className="font-bold text-4xl text-indigo-500">Match Candidates - {currentJD}</h1>
-          <div className="flex items-center justify-center w-full mt-4">
-            <UploadResume
-              setResumeFileForm={setResumeFileForm}
-              uploadResumeFileToS3={uploadResumeFileToS3}
-            />
-          </div>
-          <div className="mt-4 flex items-center justify-center w-full">
-            <div>
-              <button
-                onClick={() => isGoodCandidateMatch()}
-              >Submit
-              </button>
-            </div>
-            <div><pre className="flex items center w-full text-2xl">{aiOutput}</pre></div>
-          </div>
-          
-          </div>*/}
-      </>
-      </>
-    )
+    </>
+  )
 }

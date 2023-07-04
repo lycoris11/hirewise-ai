@@ -33,6 +33,14 @@
           ],
           "category": "function",
           "resourceName": "UploadResumeToDB"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "GetResumesFromDB"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -80,6 +88,11 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "GetResumesFromDB": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "UploadJDToDB": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -121,6 +134,22 @@
         {
           "category": "function",
           "resourceName": "FileToText"
+        }
+      ]
+    },
+    "AMPLIFY_function_GetResumesFromDB_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "GetResumesFromDB"
+        }
+      ]
+    },
+    "AMPLIFY_function_GetResumesFromDB_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "GetResumesFromDB"
         }
       ]
     },

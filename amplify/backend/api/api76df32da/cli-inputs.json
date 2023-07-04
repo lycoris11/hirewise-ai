@@ -52,6 +52,19 @@
           "delete"
         ]
       }
+    },
+    "/db/getResume": {
+      "name": "/db/getResume",
+      "lambdaFunction": "GetResumesFromDB",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
     }
   }
 }

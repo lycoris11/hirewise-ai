@@ -32,6 +32,10 @@
         "UploadResumeToDB": {
           "deploymentBucketName": "amplify-hirewise-dev-191919-deployment",
           "s3Key": "amplify-builds/UploadResumeToDB-3675775a693863455541-build.zip"
+        },
+        "GetResumesFromDB": {
+          "deploymentBucketName": "amplify-hirewise-dev-191919-deployment",
+          "s3Key": "amplify-builds/GetResumesFromDB-6b6c5a33616639533170-build.zip"
         }
       },
       "api": {
