@@ -1,19 +1,22 @@
 import dynamic from 'next/dynamic';
 import NavBar from '../components/NavBar';
 import LoginFlow from '../components/LoginFlow';
-
+import Router from 'next/router';
+import { useState } from 'react';
 
 const Particle = dynamic(() => import("../components/Particle"), {
   ssr: false,
-})
+});
 
 function Profile(){
+  
+  const [renderParticles, setRenderParticles] = useState('false');
 
   const options={
     "fullScreen": false,
     "particles": {
       "number": {
-        "value": 75,
+        "value": 50,
         "density": {
           "enable": true,
           "value_area": 800
@@ -66,7 +69,7 @@ function Profile(){
       },
       "move": {
         "enable": true,
-        "speed": 0.5,
+        "speed": 0.2,
         "direction": "none",
         "random": false,
         "straight": false,
@@ -120,13 +123,18 @@ function Profile(){
       }
     },
     "retina_detect": true
-}
-  
+  }
+
+  const handleSignInRender = (isRendered) => {
+    setRenderParticles(isRendered);
+  }
+
   return(
     <>
-      <NavBar></NavBar>
-      <Particle options={options}/>
-      <LoginFlow/>
+      {
+        renderParticles && (<Particle options={options}/>)
+      }
+      <LoginFlow isBeingRendered={handleSignInRender}/>
     </>
   )
 

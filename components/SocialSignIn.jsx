@@ -5,21 +5,18 @@ export default function SocialSignIn(){
 
   return(
     <>
-      <div className="flex flex-col 
-        hover:shadow-inputfocus 
-        hover:transition-transform 
-        hover:-translate-y-0.5 
-        hover:ease-in-out 
-        duration-700">
-        <button className="mt-8 focus:outline-none"
-          onClick={() => Auth.federatedSignIn({provider: 'Google'})}  
-        >
-          <div className="flex border bg-black text-gray-100 border-gray-100 p-2 rounded-md items-center justify-center">
-            <FaGoogle size="28" className="text-red-600"></FaGoogle>
-            <p className="ml-3">Sign in with Google</p>
-          </div>
+        <button 
+          onClick={() => Auth.federatedSignIn({provider: 'Google'})} 
+          className={`
+            flex justify-center items-center py-2 px-4
+            self-stretch shadow-sm rounded-md
+            hover:transition-transform hover:scale-x-105 hover:-translate-y-1 hover:ease-in-out 
+            hover:duration-500 duration-500
+            bg-white
+            border
+            border-gray-300`}
+        ><FaGoogle size="28" className="text-gray-500"></FaGoogle>
         </button>
-      </div>
     </>
   )
 }

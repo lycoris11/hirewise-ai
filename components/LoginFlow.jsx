@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import '../configureAmplify'
 import SignIn from "../components/SignIn";
@@ -6,9 +6,10 @@ import SignUp from "../components/SignUp";
 import ForgotPassword from "../components/ForgotPassword";
 import ForgotPasswordSubmit from "../components/ForgotPasswordSubmit";
 import ConfirmSignUp from "../components/ConfirmSignUp";
+import NavBar from "./NavBar";
 
 
-export default function LoginFlow(){
+export default function LoginFlow({isBeingRendered}){
 
   const[uiState, setUiState] = useState(null);
   const[formState, setFormState] = useState({email:'', password:'', authCode:''});
@@ -78,8 +79,6 @@ export default function LoginFlow(){
       }, 1000);
   }
 
-  /*use reducer */
-
   async function forgotPassword(){
     try{
       await Auth.forgotPassword(email);
@@ -105,75 +104,76 @@ export default function LoginFlow(){
       !uiState || uiState === 'loading' ? (
         <></>
       ) : (
-        <div className="select-none min-h-screen bg-repeat-round overflow: hidden;">
-          <div className="flex flex-col items-center">
-            <div className="max-w-full sm:w-540 mt-16">
-              <div className="backdrop-invert backdrop-blur py-16 px-16 shadow-form rounded-lg">
-                {
-                  uiState === 'signUp' && (
-                    <SignUp
-                      onChange={onChange}
-                      setUiState={setUiState}
-                      signUp={signUp}
-                      shake={shake}
-                    />
-                  )
-                }
-                {
-                  uiState === 'confirmSignUp' && (
-                    <ConfirmSignUp
-                      onChange={onChange}
-                      setUiState={setUiState}
-                      confirmSignUp={confirmSignUp}
-                    />
-                  )
-                }
-                {
-                  uiState === 'signIn' && (
-                    <SignIn
-                      setUiState={setUiState}
-                      onChange={onChange}
-                      signIn={signIn}
-                      shake={shake}
-                    />
-                  )
-                }
-                {
-                  (uiState === 'signedIn' && user) && (
-                    <div>
-                      <p className='text-xl text-white'>Welcome, {user.attributes.email}</p>
-                      <button className="text-white w-full mt-10 bg-pink-600 p-3 rounded"
-                        onClick = {() => {
-                          Auth.signOut();
-                          setUiState('signIn');
-                          setUser(null);
-                        }}
-                      >Sign Out
-                      </button>
-                    </div>
-                  )
-                }
-                {
-                  uiState === 'forgotPassword' && (
-                    <ForgotPassword
-                      onChange={onChange}
-                      setUiState={setUiState}
-                      forgotPassword={forgotPassword}
-                    />
-                  )
-                }
-                {
-                  uiState === 'forgotPasswordSubmit' && (
-                    <ForgotPasswordSubmit
-                      onChange={onChange}
-                      forgotPasswordSubmit={forgotPasswordSubmit}
-                    />
-                  )
-                }
+        <>
+          {
+            uiState === 'signUp' && (
+              <SignUp
+                onChange={onChange}
+                setUiState={setUiState}
+                signUp={signUp}
+                shake={shake}
+              />
+            )
+          }
+          {
+            uiState === 'confirmSignUp' && (
+              <ConfirmSignUp
+                onChange={onChange}
+                setUiState={setUiState}
+                confirmSignUp={confirmSignUp}
+              />
+            )
+          }
+          {
+            uiState === 'signIn' && (
+              <>
+                <NavBar state={"signIn"}></NavBar>
+                <SignIn
+                  setUiState={setUiState}
+                  onChange={onChange}
+                  signIn={signIn}
+                  shake={shake}
+                  isBeingRendered={isBeingRendered}
+                />
+              </>
+            )
+          }
+          {
+            (uiState === 'signedIn' && user) && (
+              <div>
+                <p className='text-xl text-white'>Welcome, {user.attributes.email}</p>
+                <button className="text-white w-full mt-10 bg-pink-600 p-3 rounded"
+                  onClick = {() => {
+                    Auth.signOut();
+                    setUiState('signIn');
+                    setUser(null);
+                  }}
+                >Sign Out
+                </button>
               </div>
-            </div>
-          </div>
-        </div>
+            )
+          }
+          {
+            uiState === 'forgotPassword' && (
+              <>
+                <NavBar state={"forgotPassowrd"} setUiState={setUiState}></NavBar>
+                <ForgotPassword
+                  onChange={onChange}
+                  setUiState={setUiState}
+                  forgotPassword={forgotPassword}
+                />
+              </>
+            )
+          }
+          {
+            uiState === 'forgotPasswordSubmit' && (
+              <ForgotPasswordSubmit
+                onChange={onChange}
+                forgotPasswordSubmit={forgotPasswordSubmit}
+              />
+            )
+          }
+        </>
       )
     }
     

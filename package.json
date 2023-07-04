@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.15",
+    "@heroicons/react": "^2.0.18",
     "@nextui-org/react": "^1.0.0-beta.13",
     "aws-amplify": "^5.2.4",
     "next": "^12.3.4",
@@ -21,6 +23,7 @@
     "tsparticles-plugin-absorbers": "^2.10.0"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "autoprefixer": "^10.4.14",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",

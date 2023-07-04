@@ -1,7 +1,7 @@
 import { Auth } from 'aws-amplify'
 import Link from "next/link"
 
-export default function NavBar({state}){
+export default function NavBar({state, setUiState}){
   return(
     <>
       <nav className='
@@ -20,27 +20,48 @@ export default function NavBar({state}){
           </div>
           
           <div>
-            {state==='protected' ? (
-              <>
-                <a
-                  onClick = {() => {
-                  Auth.signOut();
-                  }}
-                  className='ml-4 cursor-pointer'
-                >Sign Out
-                </a>
-              </>
-            ) : (
-              <>
-                <Link href='/protected'>
-                  <a className='ml-4'>Protect</a>
-                </Link>
+            {
+              state==='splash' && (
+                <>
+                  <button onClick={() => setUiState('signIn')}>
+                    <a className='ml-4'>Sign In</a>
+                  </button>
+                </>
+              )
+            }
 
-                <Link href='/profile'>
-                  <a className='ml-4'>Sign In</a>
-                </Link>    
-              </>
-            )}  
+            {
+              state==='protected' && (
+                <>
+                  <a
+                    onClick = {() => {
+                    Auth.signOut();
+                    }}
+                    className='ml-4 cursor-pointer'
+                  >Sign Out
+                  </a>
+                </>
+              )
+            }
+
+            {state==='signIn' && (
+                <>
+                  <Link href='/'>
+                    <a className='ml-4'>Return Home</a>
+                  </Link>
+                </>
+              )
+            } 
+
+            {
+              state==='forgotPassowrd' && (
+                <>
+                  <button onClick={() => setUiState('signIn')}>
+                    <a className='ml-4'>Sign In</a>
+                  </button>
+                </>
+              )
+            }
           </div>
       </nav>
     </>

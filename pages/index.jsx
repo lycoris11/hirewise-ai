@@ -3,7 +3,7 @@ import NavBar from '../components/NavBar'
 export default function Home() {
   return (
     <>
-      <NavBar></NavBar>
+      <NavBar state={'splash'}></NavBar>
       
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-100">
           <div className="flex flex-col items-center">
