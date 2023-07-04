@@ -16,7 +16,8 @@ module.exports = {
         '540': '540px'
       },
       height: {
-        '85p': '85%'
+        '85p': '85%',
+        '75vh': '75vh'
       },
       boxShadow:{
         'form': '0 15px 35px 0 rgba(60,66,87,.08), 0 5px 15px 0 rgba(0,0,0,.12)',

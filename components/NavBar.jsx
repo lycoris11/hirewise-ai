@@ -23,9 +23,9 @@ export default function NavBar({state, setUiState}){
             {
               state==='splash' && (
                 <>
-                  <button onClick={() => setUiState('signIn')}>
+                  <Link href='/profile'>
                     <a className='ml-4'>Sign In</a>
-                  </button>
+                  </Link>
                 </>
               )
             }
@@ -52,6 +52,15 @@ export default function NavBar({state, setUiState}){
                 </>
               )
             } 
+
+            {state==='signUp' && (
+                <>
+                  <Link href='/'>
+                    <a className='ml-4'>Return Home</a>
+                  </Link>
+                </>
+              )
+            }
 
             {
               state==='forgotPassowrd' && (

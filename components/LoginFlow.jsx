@@ -107,12 +107,15 @@ export default function LoginFlow({isBeingRendered}){
         <>
           {
             uiState === 'signUp' && (
-              <SignUp
-                onChange={onChange}
-                setUiState={setUiState}
-                signUp={signUp}
-                shake={shake}
-              />
+              <>
+                <NavBar state={"signUp"} setUiState={setUiState}></NavBar>
+                <SignUp
+                  onChange={onChange}
+                  setUiState={setUiState}
+                  signUp={signUp}
+                  shake={shake}
+                />
+              </>
             )
           }
           {
@@ -161,6 +164,7 @@ export default function LoginFlow({isBeingRendered}){
                   onChange={onChange}
                   setUiState={setUiState}
                   forgotPassword={forgotPassword}
+                  isBeingRendered={isBeingRendered}
                 />
               </>
             )
