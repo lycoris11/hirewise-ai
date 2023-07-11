@@ -48,7 +48,7 @@ export default function SignIn({onChange, setUiState, signIn, shake, isBeingRend
                     focus:ease-in-out
                     focus:duration-500
                     duration-500"
-                  placeholder="you@example.com"
+                  placeholder="you@email.com"
                 />
               </div>
 
@@ -66,7 +66,7 @@ export default function SignIn({onChange, setUiState, signIn, shake, isBeingRend
                     focus:ease-in-out
                     focus:duration-500
                     duration-500"
-                  placeholder="password"
+                  placeholder="*********"
                 />
               </div>
 
@@ -85,7 +85,6 @@ export default function SignIn({onChange, setUiState, signIn, shake, isBeingRend
                     shadow-sm rounded-md bg-indigo-500
                     ${shake ? 'shake': ''}
                     hover:transition-transform
-                    hover:scale-x-105
                     hover:-translate-y-1 
                     hover:ease-in-out
                     hover:duration-500
@@ -102,7 +101,7 @@ export default function SignIn({onChange, setUiState, signIn, shake, isBeingRend
                 <hr className="h-px flex-grow flex-shrink-0 basis-0" />
               </div>
               
-              <SocialSignIn/>
+              <SocialSignIn setUiState={setUiState}/>
               
 
             </div>

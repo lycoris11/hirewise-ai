@@ -1,23 +1,41 @@
 import { Auth } from "aws-amplify";
 import Input from "./Input";
+import SocialSignIn from "./SocialSignIn";
 
 export default function SignUp({onChange, setUiState, signUp, shake}){
 
     return(
       <>
 
-      <div className="flex flex-col h-75vh items-center justify-center pb-12 select-none">
-        <div className="w-full sm:w-540 shadow-form backdrop-blur rounded-lg">
+        <div className="flex flex-start h-screen flex-grow flex-shrink-0 basis-0 self-stretch">
+          <div className="flex flex-col basis-1/2 justify-center items-center py-12 px-24 self-stretch">
 
-          <div className="gap-8">
+            <div className="flex flex-col gap-6 pb-24 w-96">
+              
+              <div className="flex flex-col items-start gap-6">
+                <div>
+                  Logo
+                </div>
+                <div className="flex flex-col flex-start gap-2">
+                  <div className="text-4xl leading-9 font-semibold">Sign up for Hirewise</div>
+                </div>
+              </div>
 
-            <div className="flex flex-col gap-6 items-center">
-              <div>Logo</div>
-              <p className="mt-4 text-gray-900 font-medium self-start px-10 text-4xl sm:text-3xl md:text-4xl sm:leading-tight md:leading-tight">Forgot Password?</p>
-            </div>
+              {/*Social Sign in*/}
+              <div className="flex flex-col items-start gap-1">
+                <div className="text-sm leading-5 font-medium text-gray-900">Sign in with</div>
+                <SocialSignIn/>
+              </div>
+ 
+              {/*Or continue with*/}
+              <div className="flex justify-center items-center gap-2 self-stretch">
+                <hr className="h-px flex-grow flex-shrink-0 basis-0" />
+                <span className="text-sm text-gray-900">Or continue with</span>
+                <hr className="h-px flex-grow flex-shrink-0 basis-0" />
+              </div>  
+              
 
-            <div className="flex flex-col gap-6 py-8 px-10 items-center self-stretch">
-            
+              {/**Email Input */}
               <div className="flex flex-col self-stretch gap-1">
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email *
@@ -32,10 +50,12 @@ export default function SignUp({onChange, setUiState, signUp, shake}){
                     focus:ease-in-out
                     focus:duration-500
                     duration-500"
-                  placeholder="you@example.com"
+                  placeholder="you@email.com"
                 />
               </div>
+              
 
+              {/**Password Input */}
               <div className="flex flex-col self-stretch gap-1">
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Password *
@@ -50,16 +70,24 @@ export default function SignUp({onChange, setUiState, signUp, shake}){
                     focus:ease-in-out
                     focus:duration-500
                     duration-500"
-                  placeholder="password"
+                  placeholder="*********"
                 />
               </div>
 
+              <div className="flex self-end px-1 text-indigo-500">
+                <span
+                  onClick={() => setUiState('signIn')}
+                  role="button"
+                >Have an account?</span>  
+              </div>
+              
               <button
                 onClick={signUp}
                 className={
                   `
                     flex justify-center items-center py-2 px-4 self-stretch
                     shadow-sm rounded-md bg-indigo-500
+                    ${shake ? 'shake': ''}
                     hover:transition-transform
                     hover:-translate-y-1 
                     hover:ease-in-out
@@ -68,24 +96,18 @@ export default function SignUp({onChange, setUiState, signUp, shake}){
                   `
                 }
               >
-                <p className="font-normal tracking-wider text-sm leading-5 text-white">Reset Password</p>
+                <p className="font-normal tracking-wider text-sm leading-5 text-white">Sign Up</p>
               </button>
-
-              <div className="flex self-start px-1 text-indigo-500">
-                <p className="text-sm font-medium text-gray-900">Have an account?
-                  <span className="cursor-pointer text-indigo-500 underline ml-2 underline-offset-2"
-                    onClick={() => setUiState('signIn')}
-                    role="button"
-                  >Sign in.</span>
-                </p> 
-              </div>
+              
 
             </div>
 
           </div>
-
+          
+          <div className="flex flex-col basis-1/2 justify-center items-center self-stretch">
+            <img className="object-cover w-full h-full" src="/sign-in-split.png"></img>
+          </div>
         </div>
-      </div>
       {/*
         <p className="mt-4 text-gray-100 text-4xl sm:text-3xl md:text-4xl sm:leading-tight md:leading-tight">Create an Account.</p>
   

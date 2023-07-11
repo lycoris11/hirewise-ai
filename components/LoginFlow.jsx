@@ -7,6 +7,7 @@ import ForgotPassword from "../components/ForgotPassword";
 import ForgotPasswordSubmit from "../components/ForgotPasswordSubmit";
 import ConfirmSignUp from "../components/ConfirmSignUp";
 import NavBar from "./NavBar";
+import { useRouter } from 'next/router';
 
 
 export default function LoginFlow({isBeingRendered}){
@@ -16,6 +17,8 @@ export default function LoginFlow({isBeingRendered}){
   const[shake, setShake] = useState(false);
   const[user, setUser] = useState(null);
   const {email, password, authCode} = formState;
+
+  const router = useRouter();
 
   useEffect(() => {
     checkUser();
@@ -27,7 +30,8 @@ export default function LoginFlow({isBeingRendered}){
       const user = await Auth.currentAuthenticatedUser();
       console.log(user);
       setUser(user);
-      setUiState('signedIn');
+      //setUiState('signedIn');
+      router.push('/protected')
     } catch(err){ 
       setUser(null);
       setUiState('signIn');
@@ -53,7 +57,6 @@ export default function LoginFlow({isBeingRendered}){
   async function confirmSignUp(){
     try{
       await Auth.confirmSignUp(email, authCode);
-      setUiState('signedIn');
       signIn();
     } catch(err){
       console.log({err}[0]);
@@ -124,6 +127,7 @@ export default function LoginFlow({isBeingRendered}){
                 onChange={onChange}
                 setUiState={setUiState}
                 confirmSignUp={confirmSignUp}
+                isBeingRendered={isBeingRendered}
               />
             )
           }

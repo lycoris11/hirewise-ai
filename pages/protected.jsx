@@ -6,6 +6,8 @@ import NavBar from '../components/NavBar';
 import UploadJD from '../components/UploadJD';
 import ResumeUploads from '../components/ResumeUploads';
 import SidePanel from '../components/SidePanel';
+import Link from 'next/link';
+import UploadJobModal from '../components/UploadJobModal';
 
 export default function Protected(){
 
@@ -22,6 +24,8 @@ export default function Protected(){
   const[userIdentityId, setUserIdentityId] = useState('');
   const[mainPanelState, setMainPanelState] = useState(null);
   const[currentJD, setCurrentJD] = useState('');
+
+  const [isModalVisible, setModalVisible] = useState(false);
   
   const router = useRouter();
   const api = 'api76df32da';
@@ -33,6 +37,14 @@ export default function Protected(){
     getJDFiles();
     jdFiles.length > 0 ? setMainPanelState('ResumeUploads') : setMainPanelState('UploadJD')
   }, []);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   async function checkUser(){
     try{
@@ -204,8 +216,57 @@ export default function Protected(){
 
   return(
     <>
-      {/*<NavBar state={'protected'}/>*/}
-      
+      {isModalVisible && <UploadJobModal closeModal={closeModal} />}
+
+      <div className='flex flex-col justify-center items-center self-stretch bg-gray-800'>
+        
+        <div className='flex h-20 justify-between items-center self-stretch'>
+          <div className='flex w-full py-0 px-12 justify-between self-stretch'>
+
+            <div className="flex items-center gap-8">
+              <div>Logo</div>
+
+              <Link className='flex py-2 px-3' href='/'>
+                <a className='font-normal text-2xl text-white'>Hirewise AI</a>
+              </Link>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button className="text-white bg-white text-md bg-opacity-20 py-2 px-4 rounded-lg"
+                onClick = {() => {
+                  Auth.signOut();
+                  setUser(null);
+                }}
+              >Sign Out
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <div className='flex w-full py-0 px-12 flex-col'>
+          <hr className="h-px self-stretch border-gray-700" />
+        </div>
+
+        <div className="flex py-10 px-12 justify-center items-center self-stretch">
+          <div className='flex w-full justify-between items-start'>
+            <p className='text-4xl leading-9 font-semibold text-white'>Welcome, Recruiter!</p>
+          </div>
+
+          <button 
+            onClick={() => {openModal(true)}}
+            className='flex py-2 px-4 justify-center items-center gap-2 rounded-md bg-indigo-500 shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500'>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5 text-white">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+            </svg>
+            <div className='text-sm leading-5 font-medium text-white whitespace-nowrap'>Upload a Job</div>
+          </button>
+        </div>
+
+      </div>
+
+      <div></div>
+                
       <div className='min-h-screen'>
         <div className='max-w-full h-screen'>
           <div className="flex flex-row mx-8 my-4 h-85p shadow-form rounded-md">

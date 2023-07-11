@@ -5,6 +5,7 @@ export default function Home() {
     <>
       <NavBar state={'splash'}></NavBar>
       
+      {/*
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-100">
           <div className="flex flex-col items-center">
             <div className="max-w-2/3 sm:w-2/3 mt-16">
@@ -32,7 +33,7 @@ export default function Home() {
 
       <footer>
         <a href="link-to-signup-page" className="cta-button">Get started today</a>
-      </footer>
+      </footer>*/}
 
     </>
   )
