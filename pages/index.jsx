@@ -1,29 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import NavBar from '../components/NavBar'
 import Link from 'next/link'
 
 export default function Home() {
 
   const [email, setEmail] = useState('');
-  const [user, setUser] = useState('');
-
-  useEffect(() => {
-    checkUser();
-  }, []);
-
-  async function checkUser(){
-    try{
-      const user = await Auth.currentAuthenticatedUser();
-      setUserIdentityId((await Auth.currentCredentials()).identityId);
-      setUser(user);
-    } catch(err){ 
-      setUser(null);
-    };
-  };
 
   return (
     <>
-      {user ? <NavBar state={'splash'}></NavBar> : <NavBar state={'signedIn'}></NavBar>}
+      <NavBar state={'splash'}></NavBar>
+      
+      
 
       <div className='flex py-32 px-20 justify-center self-stretch bg-gradient-to-b from-purple-100 to-white'>
         <div className='flex w-full px-8 gap-12 items-center'>

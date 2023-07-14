@@ -1,7 +1,25 @@
-import { Auth } from 'aws-amplify'
+import { Auth } from "aws-amplify";
 import Link from "next/link"
+import { useState, useEffect } from 'react';
 
 export default function NavBar({state, setUiState}){
+
+  const[signedIn, setSignedIn] = useState(false);
+
+  useEffect(() => {
+    checkUser();
+  }, []);
+
+
+  async function checkUser(){
+    try{
+      await Auth.currentAuthenticatedUser();
+      setSignedIn(true);
+    } catch(err){ 
+      setSignedIn(false)
+    };
+  };
+
   return(
     <>
       <nav className='
@@ -21,7 +39,7 @@ export default function NavBar({state, setUiState}){
           
           <div>
             {
-              state==='splash' && (
+              (state==='splash' && signedIn == false) && (
                 <>
                   <Link href='/profile'>
                     <a className='rounded-md px-3.5 py-2.5 text-sm font-semibold hover:bg-gray-200'>Dashboard</a>
@@ -34,7 +52,7 @@ export default function NavBar({state, setUiState}){
             }
 
 {
-              state==='signedIn' && (
+              (state==='splash' && signedIn == true) && (
                 <>
                   <Link href='/profile'>
                     <a className='rounded-md px-3.5 py-2.5 text-sm font-semibold hover:bg-gray-200'>Dashboard</a>
