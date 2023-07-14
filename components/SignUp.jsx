@@ -1,8 +1,16 @@
 import { Auth } from "aws-amplify";
 import Input from "./Input";
 import SocialSignIn from "./SocialSignIn";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-export default function SignUp({onChange, setUiState, signUp, shake}){
+export default function SignUp({onChange, setUiState, signUp, shake, emailAddr}){
+
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push('/profile')
+  }, [])
 
     return(
       <>
@@ -51,6 +59,7 @@ export default function SignUp({onChange, setUiState, signUp, shake}){
                     focus:duration-500
                     duration-500"
                   placeholder="you@email.com"
+                  defaultValue={emailAddr}
                 />
               </div>
               

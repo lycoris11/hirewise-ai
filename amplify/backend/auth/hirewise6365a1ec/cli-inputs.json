@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "hirewise846df619_identitypool_846df619",
+    "identityPoolName": "hirewise6365a1ec_identitypool_6365a1ec",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "hirewi846df619",
-    "userPoolName": "hirewise846df619_userpool_846df619",
+    "resourceNameTruncated": "hirewi6365a1ec",
+    "userPoolName": "hirewise6365a1ec_userpool_6365a1ec",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -31,25 +31,39 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "hirewi846df619_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "hirewi6365a1ec_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "846df619",
-    "resourceName": "hirewise846df619",
+    "sharedId": "6365a1ec",
+    "resourceName": "hirewise6365a1ec",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "defaultSocial",
     "hostedUI": true,
     "usernameAttributes": [
       "email"
     ],
-    "hostedUIDomainName": "hirewise846df619-846df619",
+    "hostedUIDomainName": "hirewise6365a1ec-6365a1ec",
     "authProvidersUserPool": [
       "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true
+    "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "dependsOn": [],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}"
   }
 }

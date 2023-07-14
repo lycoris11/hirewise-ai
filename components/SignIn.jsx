@@ -2,10 +2,18 @@ import { Auth } from "aws-amplify";
 import SocialSignIn from './SocialSignIn'
 import Input from "./Input";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-export default function SignIn({onChange, setUiState, signIn, shake, isBeingRendered}){
+export default function SignIn({onChange, setUiState, signIn, shake, isBeingRendered, component}){
+
+  const router = useRouter();
 
   useEffect(() => {
+
+    if (component == 'signUp'){
+      setUiState('signUp')
+    }
+
     isBeingRendered(true);
 
     return() => {

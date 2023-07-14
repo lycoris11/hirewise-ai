@@ -13,9 +13,6 @@
       "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-hirewise-dev-191919-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
-      "auth": {
-        "hirewise846df619": {}
-      },
       "function": {
         "AIComparePython": {
           "deploymentBucketName": "amplify-hirewise-dev-191919-deployment",
@@ -43,6 +40,9 @@
       },
       "storage": {
         "hwS3v1": {}
+      },
+      "auth": {
+        "hirewise6365a1ec": {}
       }
     }
   }

@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
 import NavBar from '../components/NavBar';
 import LoginFlow from '../components/LoginFlow';
-import Router from 'next/router';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const Particle = dynamic(() => import("../components/Particle"), {
   ssr: false,
@@ -11,6 +11,8 @@ const Particle = dynamic(() => import("../components/Particle"), {
 function Profile(){
   
   const [renderParticles, setRenderParticles] = useState('false');
+
+  const router = useRouter();
 
   const options={
     "fullScreen": false,
@@ -134,7 +136,7 @@ function Profile(){
       {
         renderParticles && (<Particle options={options}/>)
       }
-      <LoginFlow isBeingRendered={handleSignInRender}/>
+      <LoginFlow isBeingRendered={handleSignInRender} component={router.query.component} emailAddr={router.query.email}/>
     </>
   )
 

@@ -10,7 +10,7 @@ import NavBar from "./NavBar";
 import { useRouter } from 'next/router';
 
 
-export default function LoginFlow({isBeingRendered}){
+export default function LoginFlow({isBeingRendered, component, emailAddr}){
 
   const[uiState, setUiState] = useState(null);
   const[formState, setFormState] = useState({email:'', password:'', authCode:''});
@@ -34,7 +34,7 @@ export default function LoginFlow({isBeingRendered}){
       router.push('/protected')
     } catch(err){ 
       setUser(null);
-      setUiState('signIn');
+      setUiState('signIn')
     };
   };
 
@@ -117,6 +117,7 @@ export default function LoginFlow({isBeingRendered}){
                   setUiState={setUiState}
                   signUp={signUp}
                   shake={shake}
+                  emailAddr={emailAddr}
                 />
               </>
             )
@@ -141,6 +142,7 @@ export default function LoginFlow({isBeingRendered}){
                   signIn={signIn}
                   shake={shake}
                   isBeingRendered={isBeingRendered}
+                  component={component}
                 />
               </>
             )

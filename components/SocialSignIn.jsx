@@ -9,7 +9,7 @@ export default function SocialSignIn({setUiState}){
   async function handleSocialSignIn(){
     try{
       await Auth.federatedSignIn({provider: 'Google'})
-      setUiState('signedIn')
+      router.push('/protected')
     } catch(err){
       console.log({err});
     }

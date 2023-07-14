@@ -24,11 +24,28 @@ export default function NavBar({state, setUiState}){
               state==='splash' && (
                 <>
                   <Link href='/profile'>
-                    <a className='rounded-md px-3.5 py-2.5 text-sm font-semibold hover:bg-gray-100'>Sign In</a>
+                    <a className='rounded-md px-3.5 py-2.5 text-sm font-semibold hover:bg-gray-200'>Dashboard</a>
                   </Link>
-                  <Link href='/protected'>
+                  <Link href="/profile?component=signUp">
                     <a className='ml-2 rounded-md bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100'>Sign Up</a>
                   </Link>
+                </>
+              )
+            }
+
+{
+              state==='signedIn' && (
+                <>
+                  <Link href='/profile'>
+                    <a className='rounded-md px-3.5 py-2.5 text-sm font-semibold hover:bg-gray-200'>Dashboard</a>
+                  </Link>
+                  
+                  <a 
+                    onClick = {() => {
+                      Auth.signOut();
+                      }}
+                    className='ml-2 rounded-md bg-red-50 px-3.5 py-2.5 text-sm font-semibold text-red-600 shadow-sm hover:cursor-pointer hover:bg-red-100'
+                  >Sign Out</a>
                 </>
               )
             }
@@ -49,8 +66,8 @@ export default function NavBar({state, setUiState}){
 
             {state==='signIn' && (
                 <>
-                  <Link href='/'>
-                    <a className='ml-4'>Home</a>
+                  <Link href='/profile'>
+                    <a className='rounded-md px-3.5 py-2.5 text-sm font-semibold hover:bg-gray-100'>Sign In</a>
                   </Link>
                 </>
               )
@@ -58,8 +75,8 @@ export default function NavBar({state, setUiState}){
 
             {state==='signUp' && (
                 <>
-                  <Link href='/'>
-                    <a className='ml-4'>Return Home</a>
+                  <Link href='/profile'>
+                    <a className='rounded-md px-3.5 py-2.5 text-sm font-semibold hover:bg-gray-100'>Home</a>
                   </Link>
                 </>
               )
