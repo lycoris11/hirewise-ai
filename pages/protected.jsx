@@ -7,7 +7,6 @@ import UploadJD from '../components/UploadJD';
 import ResumeUploads from '../components/ResumeUploads';
 import SidePanel from '../components/SidePanel';
 import Link from 'next/link';
-import UploadJobModal from '../components/UploadJobModal';
 
 export default function Protected(){
 
@@ -16,11 +15,8 @@ export default function Protected(){
 
 
   const[user, setUser] = useState(null);
-  const[fileName, setFileName] = useState('');
-  const[jdFileForm, setJDFileForm] = useState({jobName:'', jdFileData:null});
   const[resumeFileForm, setResumeFileForm] = useState({resumeFileData:null});
   const[aiOutput, setAIOutput] = useState('');
-  const[jdFiles, setJDFiles] = useState([]);
   const[userIdentityId, setUserIdentityId] = useState('');
   const[mainPanelState, setMainPanelState] = useState(null);
   const[currentJD, setCurrentJD] = useState('');
@@ -34,17 +30,10 @@ export default function Protected(){
 
   useEffect(() => {
     checkUser();
-    getJDFiles();
-    jdFiles.length > 0 ? setMainPanelState('ResumeUploads') : setMainPanelState('UploadJD')
+    //getJDFiles();
+    //jdFiles.length > 0 ? setMainPanelState('ResumeUploads') : 
+    setMainPanelState('UploadJD')
   }, []);
-
-  const openModal = () => {
-    setModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
-  };
 
   async function checkUser(){
     try{
@@ -55,34 +44,6 @@ export default function Protected(){
       setUser(null);
       router.push('/profile');
     };
-  };
-
-  async function getJDFiles(){
-    //the commented out code is more performant, while the code below is more readable.
-    try{
-      const { results } = await Storage.list('', {pageSize:'ALL'});
-      const topLevelFiles = results
-        .map(obj => obj.key)
-        .filter(file => !file.includes('/'));
-      setJDFiles(topLevelFiles);
-    }catch(err){
-      console.log(err);
-    };
-    /*try{
-      const files = await Storage.list('', {pageSize:'ALL'});
-      const fileData = files.results;
-      let keys = fileData.map(obj => obj.key)
-      const topLevelFiles = [];
-      for (let i = 0; i < keys.length; i++) {
-        const file = keys[i];
-        if (!keys[i].includes("/")) {
-          topLevelFiles.push(file);
-        }
-      }
-      setJDFiles(topLevelFiles);
-    }catch(err){
-      console.log(err);
-    };*/
   };
 
   async function extractFileText(f){
@@ -115,44 +76,6 @@ export default function Protected(){
       return Promise.reject(err);
     }
   }
-
-  async function saveUploadedJDFileToDB(pdf_text, file){
-    const body = {body:{
-      identityID:userIdentityId,
-      text: pdf_text,
-      fileName: file
-    }};
-
-    try{
-      const result = await API.post(api, '/db/uploadJD', body)
-    }catch(err){
-      console.log(err);
-    }
-  }
-
-  async function uploadJDFileToS3(){
-    if(!jdFiles.includes(jdFileForm.jobName)){
-      setMainPanelState('Loading');
-      try{
-        const result = await Storage.put(jdFileForm.jobName, jdFileForm.jdFileData, {
-          contentType: jdFileForm.jdFileData.type,
-        });
-
-        setFileName(result.key);
-
-        getJDFiles();
-        const text = await extractFileText(result.key);
-        saveUploadedJDFileToDB(text, result.key);
-
-        setMainPanelState('UploadJD');
-      }catch(err){
-        console.error('Unexpected error while uploading', err);
-      };
-    }else{
-      //Add logic to notify user that the file with filename already exists.
-      console.log("File already exists");
-    };
-  };
 
   async function saveUploadedResumeFileToDB(resumeText, aiResponse, score){
     const body = {body:{
@@ -200,24 +123,11 @@ export default function Protected(){
       console.error('Unexpected error while uploading', err);
     };
   };
-
-  function updateJDFileForm(e){
-    if(e.target.name === "jdFileData"){
-      console.log(e.target.files[0])
-      setJDFileForm({...jdFileForm, jdFileData: e.target.files[0]});
-    }
-
-    if(e.target.name === "jobName"){
-      setJDFileForm({...jdFileForm, jobName: e.target.value});
-    }
-  }
   
   if(!user) return null;
 
   return(
     <>
-      {isModalVisible && <UploadJobModal closeModal={closeModal} />}
-
       <div className='flex flex-col justify-center items-center self-stretch bg-gray-800'>
         
         <div className='flex h-20 justify-between items-center self-stretch'>
@@ -248,25 +158,31 @@ export default function Protected(){
           <hr className="h-px self-stretch border-gray-700" />
         </div>
 
-        <div className="flex py-10 px-12 justify-center items-center self-stretch">
-          <div className='flex w-full justify-between items-start'>
-            <p className='text-4xl leading-9 font-semibold text-white'>Welcome, Recruiter!</p>
-          </div>
-
-          <button 
-            onClick={() => {openModal(true)}}
-            className='flex py-2 px-4 justify-center items-center gap-2 rounded-md bg-indigo-500 shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500'>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5 text-white">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-            </svg>
-            <div className='text-sm leading-5 font-medium text-white whitespace-nowrap'>Upload a Job</div>
-          </button>
-        </div>
 
       </div>
+      {
+        mainPanelState === 'UploadJD' && (
+          <UploadJD
+            userIdentityId={userIdentityId}
+            setMainPanelState={setMainPanelState}
+            setCurrentJD={setCurrentJD}
+          />
+        )
+      }
 
-      <div></div>
-                
+      {
+        mainPanelState === 'ResumeUploads' && (
+          <ResumeUploads
+            userIdentityId={userIdentityId}
+            currentJD={currentJD}
+            setResumeFileForm={setResumeFileForm}
+            uploadResumeFileToS3={uploadResumeFileToS3}
+            aiOutput={aiOutput}
+          />
+        )
+      }
+      
+      {/*          
       <div className='min-h-screen'>
         <div className='max-w-full h-screen'>
           <div className="flex flex-row mx-8 my-4 h-85p shadow-form rounded-md">
@@ -311,7 +227,7 @@ export default function Protected(){
             </div>
           </div>
         </div>
-      </div>
+            </div>*/}
     </>
   )
 }

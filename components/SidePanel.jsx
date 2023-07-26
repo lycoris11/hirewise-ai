@@ -5,7 +5,7 @@ export default function SidePanel({jdFiles, setMainPanelState, setCurrentJD}){
         jdFiles.length > 0 ? (
           <>
             <div className='mt-4 mb-2 px-3 flex justify-between items-center'>
-              <div className="ml-2 text-2xl font-semibold leading-6 text-gray-100">Jobs</div>
+              <div className="ml-2 text-2xl font-semibold leading-6 text-gray-900">Jobs</div>
               <button className="rounded-full bg-blue-100 w-8" onClick={() => setMainPanelState('UploadJD')}>
                 <svg fill="none" className='stroke-blue-600 p-1 hover:p-0' strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
