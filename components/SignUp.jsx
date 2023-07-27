@@ -114,7 +114,7 @@ export default function SignUp({onChange, setUiState, signUp, shake, emailAddr})
           </div>
           
           <div className="flex flex-col basis-1/2 justify-center items-center self-stretch">
-            <img className="object-cover w-full h-full" src="/sign-in-split.png"></img>
+            <img className="object-cover w-full h-full" src="/sign-in-split.png" alt="Sign In Image"></img>
           </div>
         </div>
       {/*

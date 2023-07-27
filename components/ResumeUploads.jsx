@@ -72,10 +72,10 @@ export default function ResumeUploads({ userIdentityId, currentJD, setResumeFile
 
           <div>
             {
-              resumeData.map((item)=>{
+              resumeData.map((item, i)=>{
                 return (
-                  <div className='mt-4'>
-                    <p key={item}>{item[5].stringValue}</p>
+                  <div key={i} className='mt-4'>
+                    <p>{item[5].stringValue}</p>
                   </div>
                 )
               })
