@@ -1,8 +1,7 @@
 import dynamic from 'next/dynamic';
-import NavBar from '../components/NavBar';
 import LoginFlow from '../components/LoginFlow';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const Particle = dynamic(() => import("../components/Particle"), {
   ssr: false,

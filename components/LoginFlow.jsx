@@ -38,7 +38,7 @@ export default function LoginFlow({isBeingRendered, component, emailAddr}){
     };
   };
 
-  function onChange(e){
+  function updateFormState(e){
     setFormState({...formState, [e.target.name]: e.target.value});
   }
 
@@ -99,7 +99,6 @@ export default function LoginFlow({isBeingRendered, component, emailAddr}){
       console.log({err})
     }
   }
-  /*bg-[url('../public/dalle-background-opaque-cropped.png')] */
 
   return(
     <>
@@ -113,7 +112,7 @@ export default function LoginFlow({isBeingRendered, component, emailAddr}){
               <>
                 <NavBar state={"signUp"} setUiState={setUiState}></NavBar>
                 <SignUp
-                  onChange={onChange}
+                  onChange={updateFormState}
                   setUiState={setUiState}
                   signUp={signUp}
                   shake={shake}
@@ -125,7 +124,7 @@ export default function LoginFlow({isBeingRendered, component, emailAddr}){
           {
             uiState === 'confirmSignUp' && (
               <ConfirmSignUp
-                onChange={onChange}
+                onChange={updateFormState}
                 setUiState={setUiState}
                 confirmSignUp={confirmSignUp}
                 isBeingRendered={isBeingRendered}
@@ -138,7 +137,7 @@ export default function LoginFlow({isBeingRendered, component, emailAddr}){
                 <NavBar state={"signIn"}></NavBar>
                 <SignIn
                   setUiState={setUiState}
-                  onChange={onChange}
+                  onChange={updateFormState}
                   signIn={signIn}
                   shake={shake}
                   isBeingRendered={isBeingRendered}
@@ -167,7 +166,7 @@ export default function LoginFlow({isBeingRendered, component, emailAddr}){
               <>
                 <NavBar state={"forgotPassowrd"} setUiState={setUiState}></NavBar>
                 <ForgotPassword
-                  onChange={onChange}
+                  onChange={updateFormState}
                   setUiState={setUiState}
                   forgotPassword={forgotPassword}
                   isBeingRendered={isBeingRendered}
@@ -178,7 +177,7 @@ export default function LoginFlow({isBeingRendered, component, emailAddr}){
           {
             uiState === 'forgotPasswordSubmit' && (
               <ForgotPasswordSubmit
-                onChange={onChange}
+                onChange={updateFormState}
                 forgotPasswordSubmit={forgotPasswordSubmit}
               />
             )

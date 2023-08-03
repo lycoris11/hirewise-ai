@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useRef } from 'react'
 import NavBar from '../components/NavBar'
 import Link from 'next/link'
 
 export default function Home() {
 
-  const [email, setEmail] = useState('');
+  const email = useRef('');
 
   return (
     <>
@@ -28,7 +28,7 @@ export default function Home() {
               <div className='flex w-[576px] items-start gap-4'>
                 
                   <input
-                    onChange={e => {setEmail(e.target.value)}}
+                    onChange={(e) => (email.current = e.target.value)}
                     type="email"
                     name="email"
                     id="email"
@@ -65,7 +65,7 @@ export default function Home() {
                 <path className="animated-path" opacity="0.15" d="M314.74 310.306C314.74 314.748 317.374 319.944 320.684 321.826C323.919 323.709 326.554 321.601 326.554 317.158C326.554 312.716 323.919 307.52 320.609 305.638C317.374 303.755 314.74 305.863 314.74 310.306Z" fill="black"/>
                 <path className="animated-path" opacity="0.15" d="M413.232 330.636V398.631L404.353 393.511V325.516L413.232 330.636Z" fill="black"/>
                 <path className="animated-path" opacity="0.15" d="M432.644 341.932V409.926L423.766 404.806V336.811L432.644 341.932Z" fill="black"/>
-                <path className="animated-path"opacity="0.15" d="M452.132 353.225V421.221L443.253 416.1V348.105L452.132 353.225Z" fill="black"/>
+                <path className="animated-path" opacity="0.15" d="M452.132 353.225V421.221L443.253 416.1V348.105L452.132 353.225Z" fill="black"/>
                 <path className="animated-path" opacity="0.07" d="M274.635 358.346L500.288 488.688V608.187L274.635 477.845V358.346Z" fill="url(#paint7_linear_61_2646)"/>
                 <path className="animated-path" opacity="0.3" d="M244.538 374.159L470.19 504.501V624L244.538 493.658V374.159Z" fill="url(#paint8_linear_61_2646)"/>
                 <path className="animated-path" d="M264.778 445.316C264.778 454.955 270.496 466.023 277.494 470.09C284.491 474.156 290.21 469.637 290.21 460C290.21 450.361 284.491 439.292 277.494 435.227C270.496 431.16 264.778 435.678 264.778 445.316Z" fill="url(#paint9_linear_61_2646)"/>
