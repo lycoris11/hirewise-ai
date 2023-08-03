@@ -26,7 +26,7 @@ export function PasswordInput({onChange}){
 
   return(
     <>
-      <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+      <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
         Password *
       </label>
       <input
@@ -65,4 +65,29 @@ export function ButtonSubmit({onClick, shake, text}){
       <p className="font-normal tracking-wider text-sm leading-5 text-white">{text}</p>
     </button>
   )
+}
+
+export default function Input(props){
+	return(
+		<input
+			{...props}
+			className="
+				bg-transparent border-b-4 border-color:white text-white
+				transition-all
+				outline-none   
+				rounded 
+				p-2 
+				mt-2 
+				w-full 
+				focus:shadow-inputfocus 
+				focus:transition-transform 
+				focus:-translate-y-1
+				focus:ease-in-out
+				focus:duration-500
+				duration-500
+				border-bottom-white
+				tracking-wide
+				"
+		/>	
+	)
 }

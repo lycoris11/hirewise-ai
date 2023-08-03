@@ -1,5 +1,4 @@
-import { Auth } from "aws-amplify";
-import Input from "./Input";
+import Input from "./Inputs";
 
 export default function ForgotPasswordSubmit({onChange, setUiState, forgotPasswordSubmit}){
 

@@ -1,8 +1,7 @@
-import { Auth } from "aws-amplify";
-import Input from "./Input";
+import { ButtonSubmit } from "./Inputs";
 import { useEffect } from "react";
 
-export default function ConfirmSignUp({onChange, setUiState, confirmSignUp, shake, isBeingRendered}){
+export default function ConfirmSignUp({onChange, confirmSignUp, shake, isBeingRendered}){
 
   useEffect(() => {
     isBeingRendered(true);
@@ -44,23 +43,7 @@ export default function ConfirmSignUp({onChange, setUiState, confirmSignUp, shak
                 />
               </div>
 
-              <button
-                onClick={confirmSignUp}
-                className={
-                  `
-                    flex justify-center items-center py-2 px-4 self-stretch
-                    shadow-sm rounded-md bg-indigo-500
-                    ${shake ? 'shake': ''}
-                    hover:transition-transform
-                    hover:-translate-y-1 
-                    hover:ease-in-out
-                    hover:duration-500
-                    duration-500
-                  `
-                }
-              >
-                <p className="font-normal tracking-wider text-sm leading-5 text-white">Authenticate</p>
-              </button>
+              <ButtonSubmit onClick={confirmSignUp} shake={shake} text="Authenticate"/>
             </div>
 
           </div>
