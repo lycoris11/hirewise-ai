@@ -1,4 +1,5 @@
 import Input from "./Inputs";
+import { PasswordInput } from "./Inputs";
 
 export default function ForgotPasswordSubmit({onChange, setUiState, forgotPasswordSubmit}){
 
@@ -13,7 +14,8 @@ export default function ForgotPasswordSubmit({onChange, setUiState, forgotPasswo
         
         <div className="mt-10">
           <label className="text-sm">New Password</label>
-          <Input onChange={onChange} name='password' type='password'/>
+          <PasswordInput onChange={onChange}/>
+          {/*<Input onChange={onChange} name='password' type='password'/>*/}
         </div>
   
         <button className="text-white w-full mt-6 bg-pink-600 p-3 rounded"
