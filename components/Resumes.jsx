@@ -2,6 +2,7 @@ import { API } from 'aws-amplify';
 import '../configureAmplify';
 import UploadResume from "./UploadResume"
 import { useState, useEffect } from 'react';
+import { Storage } from 'aws-amplify';
 
 
 export default function ResumeUploads({ userIdentityId, currentJD, setMainPanelState}){
