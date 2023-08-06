@@ -1,10 +1,11 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import NavBar from '../components/NavBar'
 import Link from 'next/link'
 
 export default function Home() {
 
-  const email = useRef('');
+  //const email = useRef('');
+  const [email, setEmail] = useState('');
 
   return (
     <>
@@ -28,7 +29,7 @@ export default function Home() {
               <div className='flex w-[576px] items-start gap-4'>
                 
                   <input
-                    onChange={(e) => (email.current = e.target.value)}
+                    onChange={(e) => {setEmail(e.target.value)}}
                     type="email"
                     name="email"
                     id="email"
