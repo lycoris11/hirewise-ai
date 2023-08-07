@@ -16,7 +16,7 @@ export function EmailInput({onChange, emailAddr}){
           focus:duration-500
           duration-500"
         placeholder="you@email.com"
-        defaultValue={emailAddr}
+        value={emailAddr}
       />
     </>
   )
