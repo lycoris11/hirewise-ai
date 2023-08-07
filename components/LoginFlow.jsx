@@ -22,6 +22,7 @@ export default function LoginFlow({isBeingRendered, component, emailAddr}){
 
   useEffect(() => {
     checkUser();
+    emailAddr ? setFormState({...formState, email: emailAddr}) : setFormState({...formState, email: ''});
   }, []);
 
   async function checkUser(){
