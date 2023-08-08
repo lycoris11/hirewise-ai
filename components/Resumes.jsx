@@ -177,7 +177,7 @@ export default function ResumeUploads({ userIdentityId, currentJD, setMainPanelS
 
           <div>
             {
-              (resumeData.length == 0 && !setFinishedQueryingResponses) ? (
+              (resumeData.length == 0 && !finishedQueryingResponses) ? (
                 <>
                   <div className="flex items-center justify-center w-full h-full py-24">
                     <div role="status">
