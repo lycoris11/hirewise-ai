@@ -1,7 +1,5 @@
 export default function JobsTable({jdFiles, setMainPanelState, setCurrentJD}){
 
-  console.log(jdFiles)
-
   const people = [
     { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
   ]
