@@ -112,65 +112,67 @@ export function SVGCloud(){
 
 export function TokenizedMessage(){
   return(
-    <h1 className=' text-[24px] sm:text-[30px] md:text-[36px] lg:text-[48px] font-normal sm:font-normal leading-relaxed sm:leading-relaxed'>
-      <span className="bg-[rgba(107,64,216,0.15)] ">Super</span>
-      <span className="bg-[rgba(104,222,122,.2)] ">charge</span>
-      <span className="bg-[rgba(244,172,54,.2)] "> your</span>
-      <span className="bg-[rgba(239,65,70,.2)] "> recruitment</span>
-      <span className="bg-[rgba(39,181,234,.2)] "> process</span>
-      <span className="bg-[rgba(107,64,216,0.15)]">.</span><br/>
-      <span className="bg-[rgba(244,172,54,0.2)]">H</span>
-      <span className="bg-[rgba(239,65,70,0.2)]">ire</span>
-      <span className="bg-[rgba(39,181,234,0.2)]">wise</span>
-      <span className="bg-[rgba(107,64,216,0.15)]"> A</span>
-      <span className="bg-[rgba(104,222,122,0.2)]">.</span>
-      <span className="bg-[rgba(244,172,54,0.2)]">I</span>
-      <span className="bg-[rgba(239,65,70,0.2)]">.</span>
-      <span className="bg-[rgba(39,181,234,0.2)]"> harness</span>
-      <span className="bg-[rgba(107,64,216,0.15)]">es</span>
-      <span className="bg-[rgba(104,222,122,0.2)]"> the</span>
-      <span className="bg-[rgba(244,172,54,0.2)]"> potential</span>
-      <span className="bg-[rgba(239,65,70,0.2)]"> of</span>
-      <span className="bg-[rgba(39,181,234,0.2)]"> Gener</span>
-      <span className="bg-[rgba(107,64,216,0.15)]">ative</span>
-      <span className="bg-[rgba(104,222,122,0.2)]"> AI</span>
-      <span className="bg-[rgba(244,172,54,0.2)]"> and</span>
-      <span className="bg-[rgba(239,65,70,0.2)]"> Large</span>
-      <span className="bg-[rgba(39,181,234,0.2)]"> Language</span>
-      <span className="bg-[rgba(107,64,216,0.15)]"> Models</span>
-      <span className="bg-[rgba(104,222,122,0.2)]">,</span>
-      <span className="bg-[rgba(244,172,54,0.2)]"> powered</span>
-      <span className="bg-[rgba(239,65,70,0.2)]"> by</span>
-      <span className="bg-[rgba(39,181,234,0.2)]"> G</span>
-      <span className="bg-[rgba(107,64,216,0.15)]">PT</span>
-      <span className="bg-[rgba(104,222,122,0.2)]">-</span>
-      <span className="bg-[rgba(244,172,54,0.2)]">3</span>
-      <span className="bg-[rgba(239,65,70,0.2)]">.</span>
-      <span className="bg-[rgba(39,181,234,0.2)]">5</span>
-      <span className="bg-[rgba(107,64,216,0.15)]">,</span>
-      <span className="bg-[rgba(104,222,122,0.2)]"> to</span><br/>
-      <span className="bg-[rgba(239,65,70,0.2)]">eff</span>
-      <span className="bg-[rgba(39,181,234,0.2)]">ort</span>
-      <span className="bg-[rgba(107,64,216,0.15)]">lessly</span>
-      <span className="bg-[rgba(104,222,122,0.2)]"> compare</span>
-      <span className="bg-[rgba(244,172,54,0.2)]"> resumes</span>
-      <span className="bg-[rgba(239,65,70,0.2)]"> and</span>
-      <span className="bg-[rgba(39,181,234,0.2)]"> job</span>
-      <span className="bg-[rgba(107,64,216,0.15)]"> descriptions</span>
-      <span className="bg-[rgba(104,222,122,0.2)]">.</span><br/>
-      <span className="bg-[rgba(239,65,70,0.2)]">Red</span>
-      <span className="bg-[rgba(39,181,234,0.2)]">uce</span>
-      <span className="bg-[rgba(107,64,216,0.15)]"> time</span>
-      <span className="bg-[rgba(104,222,122,0.2)]">-</span>
-      <span className="bg-[rgba(244,172,54,0.2)]">to</span>
-      <span className="bg-[rgba(239,65,70,0.2)]">-</span>
-      <span className="bg-[rgba(39,181,234,0.2)]">hire</span>
-      <span className="bg-[rgba(107,64,216,0.15)]"> and</span>
-      <span className="bg-[rgba(104,222,122,0.2)]"> get</span>
-      <span className="bg-[rgba(244,172,54,0.2)]"> more</span>
-      <span className="bg-[rgba(239,65,70,0.2)]"> commissions</span>
-      <span className="bg-[rgba(39,181,234,0.2)]">!</span>
-  </h1>
+    <>
+      <h1 className=' text-[24px] sm:text-[30px] md:text-[36px] lg:text-[48px] font-normal sm:font-normal leading-relaxed sm:leading-relaxed'>
+        <span className="bg-[rgba(107,64,216,0.15)] ">Super</span>
+        <span className="bg-[rgba(104,222,122,.2)] ">charge</span>
+        <span className="bg-[rgba(244,172,54,.2)] "> your</span>
+        <span className="bg-[rgba(239,65,70,.2)] "> recruitment</span>
+        <span className="bg-[rgba(39,181,234,.2)] "> process</span>
+        <span className="bg-[rgba(107,64,216,0.15)]">.</span><br/>
+        <span className="bg-[rgba(244,172,54,0.2)]">H</span>
+        <span className="bg-[rgba(239,65,70,0.2)]">ire</span>
+        <span className="bg-[rgba(39,181,234,0.2)]">wise</span>
+        <span className="bg-[rgba(107,64,216,0.15)]"> A</span>
+        <span className="bg-[rgba(104,222,122,0.2)]">.</span>
+        <span className="bg-[rgba(244,172,54,0.2)]">I</span>
+        <span className="bg-[rgba(239,65,70,0.2)]">.</span>
+        <span className="bg-[rgba(39,181,234,0.2)]"> harness</span>
+        <span className="bg-[rgba(107,64,216,0.15)]">es</span>
+        <span className="bg-[rgba(104,222,122,0.2)]"> the</span>
+        <span className="bg-[rgba(244,172,54,0.2)]"> potential</span>
+        <span className="bg-[rgba(239,65,70,0.2)]"> of</span>
+        <span className="bg-[rgba(39,181,234,0.2)]"> Gener</span>
+        <span className="bg-[rgba(107,64,216,0.15)]">ative</span>
+        <span className="bg-[rgba(104,222,122,0.2)]"> AI</span>
+        <span className="bg-[rgba(244,172,54,0.2)]"> and</span>
+        <span className="bg-[rgba(239,65,70,0.2)]"> Large</span>
+        <span className="bg-[rgba(39,181,234,0.2)]"> Language</span>
+        <span className="bg-[rgba(107,64,216,0.15)]"> Models</span>
+        <span className="bg-[rgba(104,222,122,0.2)]">,</span>
+        <span className="bg-[rgba(244,172,54,0.2)]"> powered</span>
+        <span className="bg-[rgba(239,65,70,0.2)]"> by</span>
+        <span className="bg-[rgba(39,181,234,0.2)]"> G</span>
+        <span className="bg-[rgba(107,64,216,0.15)]">PT</span>
+        <span className="bg-[rgba(104,222,122,0.2)]">-</span>
+        <span className="bg-[rgba(244,172,54,0.2)]">3</span>
+        <span className="bg-[rgba(239,65,70,0.2)]">.</span>
+        <span className="bg-[rgba(39,181,234,0.2)]">5</span>
+        <span className="bg-[rgba(107,64,216,0.15)]">,</span>
+        <span className="bg-[rgba(104,222,122,0.2)]"> to</span><br/>
+        <span className="bg-[rgba(239,65,70,0.2)]">eff</span>
+        <span className="bg-[rgba(39,181,234,0.2)]">ort</span>
+        <span className="bg-[rgba(107,64,216,0.15)]">lessly</span>
+        <span className="bg-[rgba(104,222,122,0.2)]"> compare</span>
+        <span className="bg-[rgba(244,172,54,0.2)]"> resumes</span>
+        <span className="bg-[rgba(239,65,70,0.2)]"> and</span>
+        <span className="bg-[rgba(39,181,234,0.2)]"> job</span>
+        <span className="bg-[rgba(107,64,216,0.15)]"> descriptions</span>
+        <span className="bg-[rgba(104,222,122,0.2)]">.</span><br/>
+        <span className="bg-[rgba(239,65,70,0.2)]">Red</span>
+        <span className="bg-[rgba(39,181,234,0.2)]">uce</span>
+        <span className="bg-[rgba(107,64,216,0.15)]"> time</span>
+        <span className="bg-[rgba(104,222,122,0.2)]">-</span>
+        <span className="bg-[rgba(244,172,54,0.2)]">to</span>
+        <span className="bg-[rgba(239,65,70,0.2)]">-</span>
+        <span className="bg-[rgba(39,181,234,0.2)]">hire</span>
+        <span className="bg-[rgba(107,64,216,0.15)]"> and</span>
+        <span className="bg-[rgba(104,222,122,0.2)]"> get</span>
+        <span className="bg-[rgba(244,172,54,0.2)]"> more</span>
+        <span className="bg-[rgba(239,65,70,0.2)]"> commissions</span>
+        <span className="bg-[rgba(39,181,234,0.2)]">!</span>
+    </h1>
+  </>
   )
 }
 
@@ -225,12 +227,12 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='flex justify-centeritems-center'>
-        <div className='flex w-full py-24 px-24 sm:px-28 md:px-36 lg:px-42 xl:px-52 2xl:px-72 items-center'>
+      <div className='flex justify-center items-center'>
+        <div className='flex flex-col w-full py-24 px-24 sm:px-28 md:px-36 lg:px-42 xl:px-52 2xl:px-72 items-center'>
           <TokenizedMessage/>
+          <div className='flex flex-col w-full items-end text-xs'>&#40;This is how AI sees text!&#41;</div>
         </div>
       </div>
-      
       {/*
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-100">
           <div className="flex flex-col items-center">
